@@ -1,0 +1,83 @@
+<!doctype html>
+<!-- /export/home/cs200/cs200139/Documents/labs/lab7/lab7.html         -->
+<!-- Nathan Reichert                                                   -->
+<!-- Section 4                                                         -->
+<!-- Created 10/24/2013                                                -->
+<!-- Last Edited 10/31/2013                                            -->
+<!-- The purpose of this page is to demonstrate usefulness             -->
+<!-- Of repeating simple functions in conjunction or disjunction       -->
+<!-- With themselves inside of other functions.                        -->
+<!-- ================================================================= -->
+<html>
+	<head>
+		<title>Point Orientation Test</title>
+		<script type="text/javascript">
+			function SpanToggler()
+			// Assumes: Area of text in span region is either "True" or "False"
+			// Results: Displays the opposite of what is currently in span region
+			{
+				if (document.getElementById('toggleSpan').innerHTML=="True")
+					{document.getElementById('toggleSpan').innerHTML="False";
+				}
+				else if (document.getElementById('toggleSpan').innerHTML=="False")
+					{document.getElementById('toggleSpan').innerHTML="True";
+				}
+			}
+			function IsPointInLine(left,right,xcoord)
+			// Assumes: All text boxes are filled in to correct specifications
+			// Results: Will check to see if value is within set border ranges
+			{
+				if (document.getElementById('toggleSpan').innerHTML=="False")
+			    	{if (xcoord<left || xcoord>right)
+                    	{return false
+                	}
+                	else
+                		{return true
+                	}
+				}
+				else if (document.getElementById('toggleSpan').innerHTML=="True")
+					{if (xcoord<=left || xcoord>=right)
+						{return false
+					}
+					else
+						{return true
+					}
+				}
+			}
+			function IsPointInArea(left,right,xcoord,top,bottom,ycoord)
+			// Assumes: All text boxes are filled in to correct specifications
+			// Results: Notifies if borders are unacceptable, otherwise will alert whether or not a point is in a given area
+			{
+				if (left>right || bottom>top)
+					{alert('Make sure Left<Right and Bottom<Top');
+				}
+                else if (IsPointInLine(left,right,xcoord)==true && IsPointInLine(bottom,top,ycoord)==true)
+                    {alert('Point ('+xcoord+','+ycoord+') is in area');
+                }
+                else{alert('Point ('+xcoord+','+ycoord+') is not in area');
+                }
+			}
+		</script>
+	</head>
+	<body>
+		<center><h1>Is A Point In A Box?</h1></center>
+		<p><h3>Set Boundaries of the Box</h3></p>
+		<table>
+			<tr><td>Top Boundary of Box:</td><td><input type="text" size="13" id="topBox" value="10"></td></tr>
+			<tr><td>Bottom Boundary of Box:</td><td><input type="text" size="13" id="bottomBox" value="-10"></td></tr>
+			<tr><td>Left Boundary of Box:</td><td><input type="text" size="13" id="leftBox" value="-10"></td></tr>
+			<tr><td>Right Boundary of Box:</td><td><input type="text" size="13" id="rightBox" value="10"></td></tr>
+		</table>
+		<br>
+		<p><h3>Enter Coordinates of a Point</h3></p>
+		<p>(X,Y):(<input type="text" id="exBox" size="5" value="0">,<input type="text" id="whyBox" size="5" value="0">)</p>
+		<input type="button" size="13" value="Test Point in Boundaries" onclick="IsPointInArea(parseFloat(document.getElementById('leftBox').value),
+		                                                                              parseFloat(document.getElementById('rightBox').value),
+		                                                                              parseFloat(document.getElementById('exBox').value),
+		                                                                              parseFloat(document.getElementById('topBox').value),
+		                                                                              parseFloat(document.getElementById('bottomBox').value),
+		                                                                              parseFloat(document.getElementById('whyBox').value)
+		                                                                              );">
+		<input type="button" size="13" value="Border Toggle" onclick="SpanToggler();">The border toggle is currently:<span id="toggleSpan">True</span>
+	</body>
+</html>
